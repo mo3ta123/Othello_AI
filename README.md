@@ -22,6 +22,7 @@ These heuristics are used according to the paper with each has a weight assigned
 ## GUI
 ![GUI](images/image_6.png "Othello Game")
 First the game mode is selected 
+
 ![GUI](images/image_3.png "Othello mode Game")
 ### Supported Modes
 * AI vs AI 
@@ -29,13 +30,17 @@ First the game mode is selected
 * AI vs AI
 
 If one of the players is an AI difficulty mode is selected
+
 ![GUI](images/image_4.png "Othello mode Game")
 
 In case of AI vs Human ,the user can choose which color (black plays first) is assigned to the human player.
+
 ![GUI](images/image_5.png "Othello mode Game")
 
 Then the game starts 
+
 ![GUI](images/image_6.png "Othello Game")
 
 At the end of the game the winner is announced
+
 ![GUI](images/image_7.png "Othello Game")
