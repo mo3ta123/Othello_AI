@@ -1,2 +1,3 @@
 # Othello_AI
-![A picture of a cat](images/image_1.png "A cute cat")
+![Othello Game main](images/image_1.png "Othello Game")
+
