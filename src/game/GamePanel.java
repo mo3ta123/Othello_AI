@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
     int[][] board;
 
     // black plays first = 1
-    int turn = 1;
+    int Turn = 1;
 
     BoardCell[][] cells;
 
