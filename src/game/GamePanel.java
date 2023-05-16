@@ -289,4 +289,59 @@ public class GamePanel extends JPanel {
             TurnManager();
         }
     }
+    
+    // Choose Game mode between those Three options
+    public void chooseGameType() {
+        String[] options = new String[] { "Human VS Human", "Human vs AI", "AI vs AI" };
+        String message = "Select the game mode you would like to use.";
+        AIType = JOptionPane.showOptionDialog(null, message,
+                "Choose how to play",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        switch (AIType) {
+            case 0:
+                FirstPlayer = new HumanPlayer(1);
+                SecondPlayer = new HumanPlayer(2);
+                break;
+            case 1:
+                color = ChooseColorToPlay();
+                if (color == 1) {
+                    FirstPlayer = new HumanPlayer(color);
+                } else {
+                    SecondPlayer = new HumanPlayer(color);
+                }
+                chooseDifficultyMode();
+                break;
+            case 2:
+                chooseDifficultyMode();
+                break;
+        }
+    }
+        public int ChooseColorToPlay() {
+        String[] options = new String[] { "Black", "White" };
+        String message = "Select the Color you want to play with.";
+        int ColorChoice = JOptionPane.showOptionDialog(null, message,
+                "Choose Color",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        if (ColorChoice == 0) {
+            color = 1;
+        } else {
+            color = 2;
+        }
+        return color;
+    }
+
+    public void AIHandler(Player ai) {
+        Point aiPlayPoint = ai.play(board);
+        // update board
+        board = Board.getNewBoardAfterMove(board, aiPlayPoint, Turn);
+        // switch Turn
+        if (Turn == 1) {
+            Turn = 2;
+        } else {
+            Turn = 1;
+        }
+        repaint();
+    }
 }
