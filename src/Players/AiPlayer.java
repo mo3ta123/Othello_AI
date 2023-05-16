@@ -56,4 +56,31 @@ public class AiPlayer extends Player {
             return MinMax_normal(board, myPlayer, depth, moves);
         }
     }
+    
+        private Point MinMax_IterativeDeepening(int[][] board, int Player, int depth, ArrayList<Point> moves) {
+        // iterative deepening
+        long remainTime = millisecLimit;
+        long timeTakenPrevDepth = 0;
+        // iterative deepening
+        // the remaintime must be close to double the time needed for the Prev depth
+        // making assumtion that each depth takes double time than it's prev one which
+        // is more than that and that it reached the max depth at least in one of it's
+        // branched
+        Point bestMove = null;
+        maxDepthReached = true;
+        for (int i = 0; timeTakenPrevDepth * 2 <= remainTime + 100 && maxDepthReached; i++) {
+            // System.out.println("time taken" + timeTakenPrevDepth);
+            // System.out.println();
+            // System.out.println("depth:" + (depth + i));
+            maxDepthReached = false;
+            // getting time start
+            long startTime = System.currentTimeMillis();
+            // calling normal minmax with alpha beta pruning
+            bestMove = MinMax_normal(board, Player, depth + i, moves);
+            // calculating time taken for move and remaining time
+            timeTakenPrevDepth = System.currentTimeMillis() - startTime;
+            remainTime -= timeTakenPrevDepth;
+        }
+        return bestMove;
+    }
 }
