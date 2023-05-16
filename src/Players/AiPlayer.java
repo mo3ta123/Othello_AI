@@ -162,5 +162,17 @@ public class AiPlayer extends Player {
         }
         return score;
     }
-
+  private static int evaluation(int[][] board, int player) {
+        /**
+         * the corner
+         * heuristic had a weight of 30, the mobility
+         * heuristic had a weight of 5, while the stability
+         * heuristic had a weight of 25 and the coin parity
+         * heuristic also had a weight of 25.
+         */
+        return 25 * evaluate_stability(board, player) +
+                30 * evaluate_CornersCaptured(board, player) +
+                5 * evaluate_Mobility(board, player) +
+                25 * evaluate_coinParity(board, player);
+    }
 }
