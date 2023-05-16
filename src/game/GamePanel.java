@@ -177,5 +177,116 @@ public class GamePanel extends JPanel {
         });
         TurnManager();
     }
-  
+  private boolean HoldUntilClick = false;
+
+    public void TurnManager() {
+        if (Board.hasAnyMoves(board, 1) || Board.hasAnyMoves(board, 2)) {
+            UpdateScore();
+            if (Turn == 1) {
+                if (Board.hasAnyMoves(board, 1)) {
+                    if (FirstPlayer.isHumanPlayer()) {
+                        HoldUntilClick = true;
+                    } else {
+                        FirstPlayerHandlerTimer.start();
+                    }
+                } else {
+                    // pass the Turn
+                    Turn = 2;
+                    TurnManager();
+                }
+            } else {
+                if (Board.hasAnyMoves(board, 2)) {
+                    if (SecondPlayer.isHumanPlayer()) {
+                        HoldUntilClick = true;
+                    } else {
+                        SecondPlayerHandlerTimer.start();
+                    }
+                } else {
+                    // pass the Turn
+                    Turn = 1;
+                    TurnManager();
+                }
+            }
+        } else {
+            // game end
+            int winner = Board.getWinner(board);
+            if (winner == 1) {
+                FirstPlayerTotalWins++;
+            } else if (winner == 2) {
+                SecondPlayerTotalWins++;
+            }
+            UpdateTotalWins();
+            if (FirstPlayerScore > SecondPlayerScore) {
+                PopUpMessage.showMessageDialog(null,
+                        "WINNER IS : " + FirstPlayer.getName(),
+                        "WINNER",
+                        JOptionPane.PLAIN_MESSAGE);
+            } else {
+                PopUpMessage.showMessageDialog(null,
+                        "WINNER IS : " + SecondPlayer.getName(),
+                        "WINNER",
+                        JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+    }
+
+    public void BoardInitialization() {
+        board = new int[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i][j] = 0;
+            }
+        }
+        // initial states for the board
+        setBoardValue(3, 3, 2);
+        setBoardValue(3, 4, 1);
+        setBoardValue(4, 3, 1);
+        setBoardValue(4, 4, 2);
+    }
+
+    // update score for each round
+    public void UpdateScore() {
+        FirstPlayerScore = 0;
+        SecondPlayerScore = 0;
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j] == 1) {
+                    FirstPlayerScore++;
+                }
+                if (board[i][j] == 2) {
+                    SecondPlayerScore++;
+                }
+                if (Board.canPlay(board, Turn, i, j)) {
+                    cells[i][j].HighLightLegalMoves = 1;
+                } else {
+                    cells[i][j].HighLightLegalMoves = 0;
+                }
+            }
+        }
+        FirstScore.setText(FirstPlayer.getName() + " : " + FirstPlayerScore);
+        SecondScore.setText(SecondPlayer.getName() + " : " + SecondPlayerScore);
+        TurnToPlay.setText(((Turn == 1) ? FirstPlayer.getName() + "'s turn" : SecondPlayer.getName() + "'s turn"));
+    }
+
+    public void UpdateTotalWins() {
+        TotalWinsForFirstPlayer.setText("Total Wins For " + FirstPlayer.getName() + " : " + FirstPlayerTotalWins);
+        TotalWinsForSecondPlayer.setText("Total Wins For " + SecondPlayer.getName() + " : " + SecondPlayerTotalWins);
+    }
+
+    public void ClickHandler(int i, int j) {
+        if (HoldUntilClick && Board.canPlay(board, Turn, i, j)) {
+            // update board
+            board = Board.getNewBoardAfterMove(board, new Point(i, j), Turn);
+
+            // next Turn
+            Turn = (Turn == 1) ? 2 : 1;
+
+            repaint();
+
+            HoldUntilClick = false;
+
+            TurnManager();
+        }
+    }
 }
