@@ -317,6 +317,75 @@ public class GamePanel extends JPanel {
                 break;
         }
     }
+        // Choose Game difficulty mode between those Three options
+    public void chooseDifficultyMode() {
+        String[] options = new String[] { "Easy", "Medium", "Hard" };
+        String message = "Select the game difficulty mode For AI.";
+        int difficultyChoice = JOptionPane.showOptionDialog(null, message,
+                "Choose difficulty Mode",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        switch (difficultyChoice) {
+            case 0:
+                if (AIType == 2) {
+                    FirstPlayer = new AiPlayer("EASY", 1, 1000);
+                    chooseDifficultyModeForOtherAI();
+                } else {
+                    if (color == 1) {
+                        SecondPlayer = new AiPlayer("EASY", ((color == 1) ? 2 : 1), 1000);
+                    } else {
+                        FirstPlayer = new AiPlayer("EASY", ((color == 1) ? 2 : 1), 1000);
+                    }
+                }
+                break;
+            case 1:
+                if (AIType == 2) {
+                    FirstPlayer = new AiPlayer("MED", 1, 1000);
+                    chooseDifficultyModeForOtherAI();
+                } else {
+                    if (color == 1) {
+                        SecondPlayer = new AiPlayer("MED", ((color == 1) ? 2 : 1), 1000);
+                    } else {
+                        FirstPlayer = new AiPlayer("MED", ((color == 1) ? 2 : 1), 1000);
+                    }
+                }
+                break;
+            case 2:
+                if (AIType == 2) {
+                    FirstPlayer = new AiPlayer("HIGH", 1, 1000);
+                    chooseDifficultyModeForOtherAI();
+                } else {
+                    if (color == 1) {
+                        SecondPlayer = new AiPlayer("HIGH", ((color == 1) ? 2 : 1), 1000);
+                    } else {
+                        FirstPlayer = new AiPlayer("HIGH", ((color == 1) ? 2 : 1), 1000);
+                    }
+                }
+                break;
+        }
+    }
+
+    // Choose Game difficulty mode between those Three options for the Second AI if
+    // it was Choosen AI vs AI
+    public void chooseDifficultyModeForOtherAI() {
+        String[] options = new String[] { "Easy", "Medium", "Hard" };
+        String message = "Select the game difficulty mode for the other AI.";
+        int difficultyChoice = JOptionPane.showOptionDialog(null, message,
+                "Choose difficulty Mode",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        switch (difficultyChoice) {
+            case 0:
+                SecondPlayer = new AiPlayer("EASY", 2, 1000);
+                break;
+            case 1:
+                SecondPlayer = new AiPlayer("MED", 2, 1000);
+                break;
+            case 2:
+                SecondPlayer = new AiPlayer("HIGH", 2, 1000);
+                break;
+        }
+    }
         public int ChooseColorToPlay() {
         String[] options = new String[] { "Black", "White" };
         String message = "Select the Color you want to play with.";
