@@ -174,4 +174,109 @@ public class Board {
 
         return allOppositePoints;
     }
+    
+        public static boolean canPlay(int[][] board, int player, int i, int j) {
+
+        // if place is not empty then can't play
+        if (board[i][j] != 0)
+            return false;
+
+        int idx, jdx, c;
+        int opposite_player = ((player == 1) ? 2 : 1);
+
+        // up
+        idx = i - 1;
+        jdx = j;
+        c = 0;
+        while (idx > 0 && board[idx][jdx] == opposite_player) {
+            idx--;
+            c++;
+        }
+        if (idx >= 0 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // down
+        idx = i + 1;
+        jdx = j;
+        c = 0;
+        while (idx < 7 && board[idx][jdx] == opposite_player) {
+            idx++;
+            c++;
+        }
+        if (idx <= 7 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // left
+        idx = i;
+        jdx = j - 1;
+        c = 0;
+        while (jdx > 0 && board[idx][jdx] == opposite_player) {
+            jdx--;
+            c++;
+        }
+        if (jdx >= 0 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // right
+        idx = i;
+        jdx = j + 1;
+        c = 0;
+        while (jdx < 7 && board[idx][jdx] == opposite_player) {
+            jdx++;
+            c++;
+        }
+        if (jdx <= 7 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // left
+        idx = i - 1;
+        jdx = j - 1;
+        c = 0;
+        while (idx > 0 && jdx > 0 && board[idx][jdx] == opposite_player) {
+            idx--;
+            jdx--;
+            c++;
+        }
+        if (idx >= 0 && jdx >= 0 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // right
+        idx = i - 1;
+        jdx = j + 1;
+        c = 0;
+        while (idx > 0 && jdx < 7 && board[idx][jdx] == opposite_player) {
+            idx--;
+            jdx++;
+            c++;
+        }
+        if (idx >= 0 && jdx <= 7 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // left
+        idx = i + 1;
+        jdx = j - 1;
+        c = 0;
+        while (idx < 7 && jdx > 0 && board[idx][jdx] == opposite_player) {
+            idx++;
+            jdx--;
+            c++;
+        }
+        if (idx <= 7 && jdx >= 0 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // right
+        idx = i + 1;
+        jdx = j + 1;
+        c = 0;
+        while (idx < 7 && jdx < 7 && board[idx][jdx] == opposite_player) {
+            idx++;
+            jdx++;
+            c++;
+        }
+        if (idx <= 7 && jdx <= 7 && board[idx][jdx] == player && c > 0)
+            return true;
+
+        // can't play in this place
+        return false;
+    }
 }
