@@ -27,7 +27,7 @@ First the game mode is selected
 ### Supported Modes
 * AI vs AI 
 * AI vs Human
-* AI vs AI
+* Human vs Human
 
 If one of the players is an AI difficulty mode is selected
 
