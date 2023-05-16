@@ -213,4 +213,15 @@ public class AiPlayer extends Player {
             return 0;
         }
     }
+        private static int evaluate_coinParity(int[][] board, int player) {
+        /*
+         * Coin Parity Heuristic Value =
+         * 100* (Max Player Coins –Min Player Coins)/
+         * (Max Player Coins + Min Player Coins)
+         */
+        int other_player = (player == 1) ? 2 : 1;
+        player = Board.getPlayerDiskCount(board, player);
+        other_player = Board.getPlayerDiskCount(board, other_player);
+        return 100 * (player - other_player) / (player + other_player);
+    }
 }
