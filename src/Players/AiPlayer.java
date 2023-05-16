@@ -175,4 +175,42 @@ public class AiPlayer extends Player {
                 5 * evaluate_Mobility(board, player) +
                 25 * evaluate_coinParity(board, player);
     }
+    
+        private static int evaluate_stability(int[][] board, int player) {
+        final int[][] weights = {
+                { 4, -3, 2, 2, 2, 2, -3, 4 },
+                { -3, -4, -1, -1, -1, -1, -4, -3 },
+                { 2, -1, 1, 0, 0, 1, -1, 2 },
+                { 2, -1, 0, 1, 1, 0, -1, 2 },
+                { 2, -1, 0, 1, 1, 0, -1, 2 },
+                { 2, -1, 1, 0, 0, 1, -1, 2 },
+                { -3, -4, -1, -1, -1, -1, -4, -3 },
+                { 4, -3, 2, 2, 2, 2, -3, 4 }
+        };
+        /*
+         * if((Max Player Stability Value+ Min Player Stability Value) !=0)
+         * Stability Heuristic Value =
+         * 100* (Max Player Stability Value–Min Player Stability Value)/
+         * (Max Player Stability Value+ Min Player Stability Value)
+         * else
+         * Stability Heuristic Value = 0
+         */
+        int max_stability = 0;
+        int min_stability = 0;
+        int other_player = (player == 1) ? 2 : 1;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j] == player) {
+                    max_stability += weights[i][j];
+                } else if (board[i][j] == other_player) {
+                    min_stability += weights[i][j];
+                }
+            }
+        }
+        if (min_stability + max_stability != 0) {
+            return 100 * (max_stability - min_stability) / (max_stability + min_stability);
+        } else {
+            return 0;
+        }
+    }
 }
