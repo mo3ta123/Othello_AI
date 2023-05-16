@@ -45,5 +45,11 @@ At the end of the game the winner is announced
 
 ![GUI](images/image_7.png "Othello Game")
 
-Buttons in GUI
+### Buttons in GUI
+
+
+* Play again, the game returns to its initial state with zero scores and the discs in their initial places. 
+* End, returns to the initial window of the modes choices.
+* Exit, closes the game. 
+
 ![GUI](images/image_8.png "Othello Game")
