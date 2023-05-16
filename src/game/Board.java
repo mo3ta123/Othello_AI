@@ -43,3 +43,14 @@ public class Board {
         }
         return count;
     }
+    
+    public static boolean hasAnyMoves(int[][] board, int player) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (canPlay(board, player, i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
