@@ -18,6 +18,14 @@ public class BoardCell extends JLabel implements MouseListener {
     public int HighLightLegalMoves = 0;
 
     public String text = "";
+    
+    public BoardCell(GamePanel panel, JPanel parent, int i, int j) {
+        this.panel = panel;
+        this.parent = parent;
+        this.i = i;
+        this.j = j;
+        this.addMouseListener(this);
+    }
   
       @Override
     public void paint(Graphics g) {
