@@ -54,3 +54,15 @@ public class Board {
         }
         return false;
     }
+    
+    public static ArrayList<Point> getAllPossibleMoves(int[][] board, int player) {
+        ArrayList<Point> result = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (canPlay(board, player, i, j)) {
+                    result.add(new Point(i, j));
+                }
+            }
+        }
+        return result;
+    }
