@@ -44,3 +44,6 @@ Then the game starts
 At the end of the game the winner is announced
 
 ![GUI](images/image_7.png "Othello Game")
+
+Buttons in GUI
+![Buttons](images/Screenshot 2023-05-16 120750.png "Othello Game")
