@@ -279,4 +279,25 @@ public class Board {
         // can't play in this place
         return false;
     }
+    public static int[][] getNewBoardAfterMove(int[][] board, Point move, int player) {
+
+        int[][] newboard = new int[8][8];
+        // copy board
+        for (int k = 0; k < 8; k++) {
+            for (int l = 0; l < 8; l++) {
+                newboard[k][l] = board[k][l];
+            }
+        }
+
+        // place piece
+        newboard[move.x][move.y] = player;
+        // opposite disks from this square
+        ArrayList<Point> opposite_points = Board.getOppositePoints(newboard, player, move.x, move.y);
+        for (Point point : opposite_points) {
+            newboard[point.x][point.y] = player;
+        }
+
+        return newboard;
+    }
 }
+
