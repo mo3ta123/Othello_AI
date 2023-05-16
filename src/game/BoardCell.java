@@ -83,4 +83,38 @@ public class BoardCell extends JLabel implements MouseListener {
         }
         super.paint(g);
     }
+        // Text drawing
+    public void drawStringInCenterOfRectangle(Graphics g, int x, int y, int w, int h, String text) {
+        Graphics2D g2 = (Graphics2D) g;
+        Font bfont = g2.getFont();
+        FontRenderContext context = g2.getFontRenderContext();
+        g2.setFont(bfont);
+        int textWidth = (int) bfont.getStringBounds(text, context).getWidth();
+        LineMetrics ln = bfont.getLineMetrics(text, context);
+        int textHeight = (int) (ln.getAscent() + ln.getDescent());
+        int tx = x + (w - textWidth) / 2;
+        int ty = (int) ((y + h + textHeight) / 2 - ln.getDescent());
+        g2.drawString(text, (int) tx, (int) ty);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        panel.ClickHandler(i, j);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
 }
