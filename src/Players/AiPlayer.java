@@ -224,4 +224,61 @@ public class AiPlayer extends Player {
         other_player = Board.getPlayerDiskCount(board, other_player);
         return 100 * (player - other_player) / (player + other_player);
     }
+    private static int evaluate_Mobility(int[][] board, int player) {
+        /*
+         * if((Max Player potential Mobility Value + Min Player potential Mobility
+         * Value) !=0)
+         * potential Mobility Heuristic Value =
+         * 100* (Max Player potential Mobility Value –Min Player potential
+         * Mobility Value)/
+         * (Max Player potential Mobility Value + Min Player potential
+         * Mobility Value)
+         * else
+         * potential Mobility Heuristic Value = 0
+         */
+        int other_player = (player == 1) ? 2 : 1;
+        int max_mobility = Board.getAllPossibleMoves(board, player).size();
+        int min_mobility = Board.getAllPossibleMoves(board, other_player).size();
+        if (min_mobility + max_mobility != 0) {
+            return 100 * (max_mobility - min_mobility) / (max_mobility + min_mobility);
+        } else {
+            return 0;
+        }
+    }
+
+  
+    private static int evaluate_CornersCaptured(int[][] board, int player) {
+        /*
+         * if((Max Player Corner Value + Min Player Corner Value) !=0)
+         * Corner Heuristic Value =
+         * 100* (Max Player Corner Heurisitc Value –Min Player Corner
+         * Heuristic Value)/
+         * (Max Player Corner Heuristic Value + Min Player Corner
+         * Heurisitc Value)
+         * else
+         * Corner Heuristic Value = 0
+         */
+        int other_player = (player == 1) ? 2 : 1;
+        int max_corners = 0;
+        int min_corners = 0;
+        final int[][] corners = new int[][] {
+                { 0, 0 },
+                { 0, 7 },
+                { 7, 0 },
+                { 7, 7 }
+        };
+        for (int i = 0; i < 4; i++) {
+            int x = corners[i][0];
+            int y = corners[i][1];
+            if (board[x][y] == player) {
+                max_corners++;
+            } else if (board[x][y] == other_player) {
+                min_corners++;
+            }
+        }
+        if (max_corners + min_corners != 0) {
+            return 100 * (max_corners - min_corners) / (max_corners + min_corners);
+        }
+        return 0;
+    }
 }
