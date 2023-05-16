@@ -46,4 +46,14 @@ public class AiPlayer extends Player {
     public String getName() {
         return "AI-" + diffculty + "-" + ((this.myPlayer == 1) ? "Black" : "White");
     }
+    
+    @Override
+    public Point play(int[][] board) {
+        ArrayList<Point> moves = Board.getAllPossibleMoves(board, myPlayer);
+        if (diffculty == "HIGH") {
+            return MinMax_IterativeDeepening(board, myPlayer, depth, moves);
+        } else {
+            return MinMax_normal(board, myPlayer, depth, moves);
+        }
+    }
 }
