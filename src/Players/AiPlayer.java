@@ -83,4 +83,84 @@ public class AiPlayer extends Player {
         }
         return bestMove;
     }
+        private Point MinMax_normal(int[][] board, int Player, int depth, ArrayList<Point> moves) {
+        int bestScore = Integer.MIN_VALUE;
+        Point bestMove = null;
+        for (Point move : moves) {
+            // create new node
+            int[][] newBoard = Board.getNewBoardAfterMove(board, move, myPlayer);
+            // recursive call
+            int MoveScore = MinMaxAlphaBeta(newBoard, myPlayer, depth - 1, false, Integer.MIN_VALUE,
+                    Integer.MAX_VALUE);
+            if (MoveScore >= bestScore) {
+                bestScore = MoveScore;
+                bestMove = move;
+            }
+        }
+        return bestMove;
+    }
+
+    private int MinMaxAlphaBeta(int[][] board, int Player, int depth, boolean isMaximizingPlayer, int alpha, int beta) {
+        if (Board.isGameFinished(board)) {
+            int p = Board.getWinner(board);
+            if (p == Player) {
+                return Integer.MAX_VALUE;
+            } else if (p == 0) {
+                return 0;
+            } else {
+                return Integer.MIN_VALUE;
+            }
+        }
+        // if terminal reached or depth limit reached evaluate
+        if (depth == 0) {
+            maxDepthReached = true;
+            return evaluation(board, Player);
+        }
+
+        int otherPlayer = (Player == 1) ? 2 : 1;
+        // if no moves available then forfeit turn
+        if ((isMaximizingPlayer && !Board.hasAnyMoves(board, Player))
+                || (!isMaximizingPlayer && !Board.hasAnyMoves(board, otherPlayer))) {
+
+            return MinMaxAlphaBeta(board, Player, depth - 1, !isMaximizingPlayer, alpha, beta);
+        }
+        int score;
+        if (isMaximizingPlayer) {
+            // maximizing
+            score = Integer.MIN_VALUE;
+            for (Point move : Board.getAllPossibleMoves(board, Player)) { // my turn
+                // board after move
+                int[][] newBoard = Board.getNewBoardAfterMove(board, move, Player);
+                int childScore = MinMaxAlphaBeta(newBoard, Player, depth - 1, false, alpha, beta);
+                if (childScore > score)
+                    score = childScore;
+                // alpha beta pruning
+                if (score > alpha)
+                    alpha = score;
+                if (beta <= alpha)
+                    break;
+            }
+        } else {
+            // minimizing
+            score = Integer.MAX_VALUE;
+            for (Point move : Board.getAllPossibleMoves(board, otherPlayer)) { // opponent turn
+                // board after move
+                int[][] newBoard = Board.getNewBoardAfterMove(board, move, otherPlayer);
+                int childScore = MinMaxAlphaBeta(newBoard, Player, depth - 1, true, alpha, beta);
+                if (childScore < score) {
+                    score = childScore;
+                }
+
+                // alpha beta pruning
+                if (score < beta) {
+                    beta = score;
+                }
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+        }
+        return score;
+    }
+
 }
